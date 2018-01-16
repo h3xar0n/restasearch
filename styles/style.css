@@ -1,0 +1,32 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.app-background {
+    height: calc(100vh - 100px);
+    width: 100vw;
+    padding-top: 100px;
+    background-image: url("../resources/graphics/background.png");
+}
+
+.app-foreground {
+    max-width: 800px;
+    height: 600px;
+    background-color: blue;
+    margin: 0 auto;
+}
+
+p {
+    margin: 0;
+}
+
+@media (max-width: 800px) {
+    .app-background {
+        padding-top: 0;
+        height: 100vh;
+    }
+    .app-foreground {
+        width: 100%
+    }
+}
