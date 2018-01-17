@@ -15,7 +15,10 @@ helper.on('result', function (content) {
 function renderHits(content) {
     $('#container').html(function () {
         return $.map(content.hits, function (hit) {
-            return '<li>' + hit._highlightResult.name.value + '</li>';
+            return '<li> <img src="'
+                + hit.image_url + '"/> <div class="description">'
+                + hit._highlightResult.name.value + 
+                '</div></li>';
         });
     });
 }
