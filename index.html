@@ -11,15 +11,25 @@
 
 <body>
   <div class="app-background">
-    <div class="app-foreground">
+    <div class="app-foreground" id="app">
       <div class="search-bar-container">
-        <div class="search-bar"></div>
+          <input type="text" 
+                  value="Search for Restaurants by Name, Cuisine, or Location"
+                  onblur="if(this.value==''){ this.value='Search for Restaurants by Name, Cuisine, or Location'; this.style.color='#BBB';}"
+                  onfocus="if(this.value=='Search for Restaurants by Name, Cuisine, or Location'){ this.value=''; this.style.color='#000';}" 
+                  autocomplete="off" 
+                  id="search-box" 
+                  class="search-bar" />
       </div>
-      <div class="welcome-container">
-          <pre id=container></pre>
+      <div class="facets-menu">
+        <ul id=facet-list></ul>
+      </div>
+      <div class="search-results">
+        <ul id=container></ul>
       </div>
     </div>
   </div>
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearchLite.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch-helper@2.23.2/dist/algoliasearch.helper.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
