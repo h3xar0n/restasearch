@@ -1,16 +1,14 @@
-To convert the CSV (delimited by semicolons) to JSON:
+# Special Notes
+
+## Convert the CSV (delimited by semicolons) to JSON:
 
 ``` powershell
 import-csv -Delimiter "`;"  "restaurants_info.csv" | ConvertTo-Json | Add-Content -Path "restaurants_info.json"
 ```
 
-Then, to execute a script that meges the relevant location data:
+## Merge both JSON files
 
-Made a script merge-info.js that creates a new file, new_list.json, by iterating through the restaurants_info.json and adds missing information to restaurants_list.json.
-
-Time and space complexity are O(n). 
-
-To avoid O(n^2) time complexity, I stored one list's indices into an object with the ID as the key, then checked the key against the IDs in the other list and instantly looked up the corresponding object.
+To get the relevant location data, I made a script merge-info.js that creates a new file, new_list.json, by iterating through the restaurants_info.json. It adds all missing keys to restaurants_list.json, just in case we need other ones later.
 
 ``` javascript
 const info = require('./restaurants_info.json');
@@ -44,7 +42,9 @@ fs.writeFile('new_list.json', newList, function (err) {
 node merge-info.js
 ```
 
-Due to an issue with displaying start ratings as a facet, I also added an attribute by finding the floor in rater.js:
+## Star Ratings as a Facet
+
+Due to an issue with displaying star ratings as decimal points, I also added an attribute by finding the floor in rater.js:
 
 ```javascript
 const newList = require('./new_list.json');
@@ -66,3 +66,53 @@ fs.writeFile('new_list.json', updatedList, function (err) {
 });
 ```
 
+I still used the decimal star rating to illustrate the number of stars, which go down to 0.5.
+
+## Dirty Money
+
+Finally, to resolve the issue with unwanted credit cards and payment forms appearing as facets, I sifted back through all the payment options and filtered them to the 4 we want. I realized later that this could be done in the dashboard.
+
+```javascript
+const newList = require('./new_list.json');
+const fs = require('fs');
+
+function hidePayments(newList) {
+    for (let i = 0; i < newList.length; i++) {
+        newList[i].approved_pay = [];
+        let check = {};
+        for (let j = 0; j < newList[i].payment_options.length; j++) {
+            switch(newList[i].payment_options[j]) {
+                case 'Cash Only':
+                    break;
+                case 'JCB':
+                    break;
+                case 'Pay with OpenTable':
+                    break;
+                case 'Diners Club':
+                    check.Discover = true;
+                    break;
+                case 'Carte Blanche':
+                    check.Discover = true;
+                    break;
+                default:
+                    check[newList[i].payment_options[j]] = true
+            }
+        }
+        for (var key in check) {
+            newList[i].approved_pay.push(key);
+        }
+    }
+    return newList;
+}
+
+let updatedList = JSON.stringify(hidePayments(newList));
+
+fs.writeFile('new_list.json', updatedList, function (err) {
+    if (err) return console.log(err);
+    console.log('Wrote list with base rating in the same file, new_list.json');
+});
+```
+
+## The Files are IN the Computer!
+
+To import the code, I simple dropped a refreshed JSON file in each time. I will learn other ways, though.

@@ -1,8 +1,9 @@
 var client = algoliasearch('JAGVPL8KNV', 'deca419d14859b6b0f0db8a4dfbc21c8');
 var $algoliasearchHelper = algoliasearchHelper(client, 'merged-data', {
     disjunctiveFacets: ['food_type', 'base_rate', 'approved_pay'],
-    hitsPerPage: 5,
-    maxValuesPerFacet: 10
+    hitsPerPage: 4,
+    maxValuesPerFacet: 10,
+    aroundLatLngViaIP: true
 });
 
 var SearchBox = Vue.extend({
@@ -49,7 +50,7 @@ var FoodTypeList = Vue.extend({
         var _this = this;
 
         $algoliasearchHelper.on('result', function (results) {
-            _this.facets = results.getFacetValues('food_type', ['selected', 'count:desc']).slice(0, 7);
+            _this.facets = results.getFacetValues('food_type', ['selected', 'count:desc']).slice(0, 10);
         });
     },
     methods: {
@@ -79,8 +80,9 @@ var StarRatingList = Vue.extend({
         var _this = this;
 
         $algoliasearchHelper.on('result', function (results) {
-            _this.facets = results.getFacetValues('base_rate', {sortBy: ['name:asc']}).slice(0, 5);
-            console.log(_this.facets);
+            _this.facets = results.getFacetValues('base_rate', {
+                sortBy: ['name:asc']
+            }).slice(0, 5);
         });
     },
     methods: {
@@ -111,7 +113,6 @@ var PaymentOptions = Vue.extend({
 
         $algoliasearchHelper.on('result', function (results) {
             _this.facets = results.getFacetValues('approved_pay').slice(0, 10);
-            console.log(_this.facets);
         });
     },
     methods: {
@@ -123,6 +124,14 @@ var PaymentOptions = Vue.extend({
 
 var Results = Vue.extend({
     template: `
+    <div> 
+        <div class="result-stats">
+            <span><strong>{{numHits}} results found</strong> in {{time * 0.001}} seconds</span>
+        </div>
+        <div v-if="numHits === 0" class="error">
+            <p>Please try to search for something else</p>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Magnifying_glass_icon.svg">
+        </div>
         <div class="search-results" v-for="hit in hits">
             <div class="image-container">
                 <img src="{{{hit.image_url}}}">
@@ -141,16 +150,21 @@ var Results = Vue.extend({
                 </p>
             </div>
         </div>
+    </div>
     `,
     data: function data() {
         return {
-            hits: []
+            hits: [],
+            numHits: 0,
+            time: 0,
         };
     },
     ready: function ready() {
         var _this2 = this;
         this.$resultsListener = $algoliasearchHelper.on('result', function (results) {
             _this2.hits = results.hits;
+            _this2.time = results.processingTimeMS;
+            _this2.numHits = results.nbHits;
         });
     }
 });
@@ -158,14 +172,15 @@ var Results = Vue.extend({
 var Pager = Vue.extend({
     template: `
         <div class="pager">
-            <button class="previous" v-on:click="prevPage">Previous</button>
+            <button class="previous" v-on:click="prevPage">🡠</button>
             <span class="current-page">{{currentPage + 1}}</span>
-            <button class="next" v-on:click="nextPage">Next</button>
+            <button class="next" v-on:click="nextPage">🡢</button>
         </div>
     `,
     data: function data() {
         return {
-            currentPage: 0
+            currentPage: 0,
+            numHits: 0
         };
     },
     ready: function ready() {
@@ -200,6 +215,7 @@ var App = Vue.extend({
                 </div>
                 <div class="results-index">
                     <results></results>
+                    <br>
                     <pager></pager>
                 </div>
             </div>
