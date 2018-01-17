@@ -10,9 +10,9 @@
   <link rel="stylesheet" type="text/css" href="./styles/style.css"></link>
 </head>
 
-<body>
-  <div class="app-background">
-    <div class="app-foreground" id="app">
+<body class="app-background">
+  
+    <app class="app-foreground" class="app">
       <div class="search-bar-container">
           <input type="text" 
                   value="Search for Restaurants by Name, Cuisine, or Location"
@@ -32,14 +32,16 @@
               <p class="line"></p>
             </div>
             <ul id=container></ul>
+            <div class="clearfix"></div>
           </div>
+          <div class="clearfix"></div>
       </div>
-    </div>
-  </div>
+    </app>
+ 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearchLite.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch-helper@2.23.2/dist/algoliasearch.helper.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
   <script src="./scripts/script.js"></script>
 </body>
 

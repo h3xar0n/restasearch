@@ -13,11 +13,14 @@ span {
     color: gray;
 }
 
+.clearfix {
+    clear: both;
+}
+
 .app-background {
-    min-height: calc(100vh - 50px);
-    width: 100vw;
-    padding-top: 50px;
+    padding: 74px 0;
     background-image: url("../resources/graphics/background.png");
+    background-attachment: fixed;
 }
 
 .app-foreground {
@@ -51,6 +54,85 @@ span {
     color: black;
 }
 
+/* Refinements */
+
+.refinements {
+    width: 260px;
+    margin: 16px 30px;
+    border-right: 1px solid #d9d9d9;
+}
+
+.refinements h2 {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+}
+
+.refinements ul {
+    list-style: none;
+    padding: 0;
+}
+
+.refinements li {
+    width: 90%;
+}
+
+.refinements li {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+/* Cuisine */
+
+.cuisine li:hover, .cuisine li.active {
+    background-color: #2897c5;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.cuisine li:hover span,
+.cuisine li.active span {
+    color: white;
+    cursor: pointer;
+}
+
+.cuisine .name {
+    color: black;
+    font-weight: 600;
+    margin-left: 15px;
+}
+
+.cuisine .count {
+    float: right;
+    margin-right: 15px;
+}
+
+/* Rating */
+
+.star-rating-menu {
+    margin-left: 12px;
+}
+
+.star-rating-menu li:hover span, 
+.star-rating-menu li.active span {
+    text-shadow: 0 0 3px rgb(241, 220, 98);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+/* Payments */
+
+.payments span {
+    padding-left: 10px;
+}
+
+/* Results */
+
+.results-box {
+    display: flex;
+}
+
 .result-stats-container {
     height: 80px;
     width: 100%;
@@ -63,42 +145,11 @@ span {
 }
 
 .line {
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid rgb(201, 200, 200);
     float: right;
-    width: 55%;
-    margin-right: 20px;
-    margin-top: -8px;
-}
-
-#facet-list,
-#container {
-    max-width: 150px;
-    width: 100%;
-    float: left;
-    padding: 0 1em;
-    margin: 0;
-    list-style: none;
-}
-
-#facet-list li {
-    padding: 6px 0;
-    border-bottom: 1px solid #ccc;
-}
-
-#facet-list li input {
-    margin-right: 6px;
-}
-
-#container {
-    max-width: calc(100% - 150px - 4em);
-}
-
-#container li {
-    padding: 8px 0;
-}
-
-#container em {
-    background: yellow;
+    width: 45%;
+    margin-right: 25px;
+    margin-top: -4px;
 }
 
 .search-results img {
@@ -111,28 +162,6 @@ span {
     position: relative;
     width: 100px;
     height: 100px;
-}
-
-.loader {
-    position: absolute;
-    border: 16px solid #f3f3f3;
-    /* Light grey */
-    border-top: 16px solid #3498db;
-    /* Blue */
-    border-radius: 50%;
-    width: 90px;
-    height: 90px;
-    z-index: -1;
-    animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
 }
 
 .description {
@@ -152,10 +181,15 @@ span {
     color: black;
 }
 
+.rating {
+    color: #ffac68;
+}
+
 .stars-container {
     position: relative;
     display: inline-block;
     color: transparent;
+    font-size: 20px;
 }
 
 .stars-container:before {
@@ -163,7 +197,7 @@ span {
     top: 0;
     left: 0;
     content: '★★★★★';
-    color: lightgray;
+    color: #e2e2e2;
 }
 
 .stars-container:after {
@@ -171,7 +205,7 @@ span {
     top: 0;
     left: 0;
     content: '★★★★★';
-    color: gold;
+    color: #ffac68;
     overflow: hidden;
 }
 
@@ -216,15 +250,50 @@ span {
 }
 
 .stars-100:after {
-    width: 100;
+    width: 100%;
 }
 
-@media (max-width: 800px) {
+/* No background for smaller screens */
+@media (max-width: 930px) {
     .app-background {
         padding-top: 0;
         height: 100vh;
     }
     .app-foreground {
         width: 100%
+    }
+    .line {
+        display: none;
+    }   
+}
+
+@media (max-width: 586px) {
+    .search-bar {
+        font-size: 3.2vw;
+    }
+    .search-results img, .image-container {
+        height: 75px;
+        width: 75px;
+    }
+}
+
+@media (max-width: 450px) {
+    .search-bar {
+        padding-left: 5px;
+        font-size: 3vw;
+    }
+    .search-results {
+        padding-top: 10px;
+    }
+    .search-results img, .image-container {
+        height: 50px;
+        width: 50px;
+    }
+    .description {
+        margin-left: 10px;
+    }
+    .description p, .description span {
+        font-size: 10px;
+        padding: 0;
     }
 }
