@@ -5,8 +5,12 @@ body {
     margin: 0;
 }
 
-p {
+p,
+span {
     margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    color: gray;
 }
 
 .app-background {
@@ -40,10 +44,30 @@ p {
     padding-left: 16px;
     font-size: 20px;
     color: #BBB;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .search-bar:focus {
     color: black;
+}
+
+.result-stats-container {
+    height: 80px;
+    width: 100%;
+    margin-bottom: 20px;   
+}
+
+.result-stats {
+    padding-top: 56px;
+    padding-left: 20px;
+}
+
+.line {
+    border-bottom: 1px solid gray;
+    float: right;
+    width: 55%;
+    margin-right: 20px;
+    margin-top: -8px;
 }
 
 #facet-list,
@@ -78,12 +102,121 @@ p {
 }
 
 .search-results img {
-    width: 120px;
+    height: 100px;
+    width: 100px;
+}
+
+.image-container {
     display: inline-block;
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+.loader {
+    position: absolute;
+    border: 16px solid #f3f3f3;
+    /* Light grey */
+    border-top: 16px solid #3498db;
+    /* Blue */
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    z-index: -1;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .description {
     display: inline-block;
+    vertical-align: top;
+    margin-left: 20px;
+}
+
+.description > * {
+    padding-bottom: 5px;
+}
+
+.place-name {
+    font-weight: bold;
+    font-size: 18px;
+    font-family: 'Source Sans Pro', sans-serif;
+    color: black;
+}
+
+.stars-container {
+    position: relative;
+    display: inline-block;
+    color: transparent;
+}
+
+.stars-container:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '★★★★★';
+    color: lightgray;
+}
+
+.stars-container:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '★★★★★';
+    color: gold;
+    overflow: hidden;
+}
+
+.stars-0:after {
+    width: 0%;
+}
+
+.stars-10:after {
+    width: 10%;
+}
+
+.stars-20:after {
+    width: 20%;
+}
+
+.stars-30:after {
+    width: 30%;
+}
+
+.stars-40:after {
+    width: 40%;
+}
+
+.stars-50:after {
+    width: 50%;
+}
+
+.stars-60:after {
+    width: 60%;
+}
+
+.stars-70:after {
+    width: 70%;
+}
+
+.stars-80:after {
+    width: 80%;
+}
+
+.stars-90:after {
+    width: 90%;
+}
+
+.stars-100:after {
+    width: 100;
 }
 
 @media (max-width: 800px) {

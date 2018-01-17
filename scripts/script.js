@@ -15,10 +15,22 @@ helper.on('result', function (content) {
 function renderHits(content) {
     $('#container').html(function () {
         return $.map(content.hits, function (hit) {
-            return '<li> <img src="'
-                + hit.image_url + '"/> <div class="description">'
-                + hit._highlightResult.name.value + 
-                '</div></li>';
+            return '<li> \
+                <div class="image-container"> <div class="loader"> </div> <img src="' + hit.image_url + '"> </div> \
+                <div class="description"> \
+                <p class="place-name">' + hit._highlightResult.name.value + '</p> \
+                <p> \
+                <span>' + hit.stars_count + '</span> \
+                <span class="stars-container stars-' + (Math.floor(hit.stars_count * 2) * 10) + '">★★★★★</span> \
+                <span>(' + hit.reviews_count + ' reviews)</span> \
+                </p> \
+                <p> \
+                <span>' + hit.food_type + ' |</span> \
+                <span>' + hit.neighborhood + ' |</span> \
+                <span>' + hit.price_range + '</span> \
+                </p> \
+                </div> \
+                </li>';
         });
     });
 }
