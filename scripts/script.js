@@ -129,7 +129,7 @@ var Results = Vue.extend({
             <span><strong>{{numHits}} results found</strong> in {{time * 0.001}} seconds</span>
         </div>
         <div v-if="numHits === 0" class="error">
-            <p>Please try to search for something else</p>
+            <p>Sorry, buddy, looks like we came up empty. Please try to search for something else</p>
             <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Magnifying_glass_icon.svg">
         </div>
         <div class="search-results" v-for="hit in hits">
