@@ -145,7 +145,7 @@ var Results = Vue.extend({
                 </p>
                 <p>
                     <span>{{{hit._highlightResult.food_type.value}}} |</span>
-                    <span>{{{hit.neighborhood}}} |</span>
+                    <span>{{{hit._highlightResult.neighborhood.value}}} |</span>
                     <span>{{{hit.price_range}}}</span>
                 </p>
             </div>
@@ -160,11 +160,11 @@ var Results = Vue.extend({
         };
     },
     ready: function ready() {
-        var _this2 = this;
+        var _this = this;
         this.$resultsListener = $algoliasearchHelper.on('result', function (results) {
-            _this2.hits = results.hits;
-            _this2.time = results.processingTimeMS;
-            _this2.numHits = results.nbHits;
+            _this.hits = results.hits;
+            _this.time = results.processingTimeMS;
+            _this.numHits = results.nbHits;
         });
     }
 });
@@ -184,10 +184,10 @@ var Pager = Vue.extend({
         };
     },
     ready: function ready() {
-        var _this3 = this;
+        var _this = this;
 
         $algoliasearchHelper.on('change', function (state) {
-            _this3.currentPage = $algoliasearchHelper.getPage();
+            _this.currentPage = $algoliasearchHelper.getPage();
         });
     },
     methods: {
